@@ -1,4 +1,4 @@
-﻿namespace CP.Portal.Movies.Module;
+﻿namespace CP.Portal.Movies.Module.Application.GetListMovies;
 
 public class ListMoviesDto
 {

@@ -15,7 +15,8 @@ var app = builder.Build();
 
 //app.UseHttpsRedirection();
 
-app.MapMovieEndpoints();
+// Enable Minimal API endpoints for Movies module
+//app.MapMovieEndpoints();
 
 app.UseFastEndpoints();
 

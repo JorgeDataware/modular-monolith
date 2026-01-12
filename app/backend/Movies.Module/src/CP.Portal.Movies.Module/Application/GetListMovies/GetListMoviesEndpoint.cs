@@ -1,8 +1,8 @@
 ﻿using FastEndpoints;
 
-namespace CP.Portal.Movies.Module;
+namespace CP.Portal.Movies.Module.Application.GetListMovies;
 
-public class GetListMoviesEndpoint(IMovieService movieService) : EndpointWithoutRequest<ListMoviesDto>
+public class GetListMoviesEndpoint(IMovieService movieService) : EndpointWithoutRequest<IEnumerable<MovieDto>>
 {
     private readonly IMovieService _movieService = movieService;
 
@@ -16,10 +16,10 @@ public class GetListMoviesEndpoint(IMovieService movieService) : EndpointWithout
     {
         var movies = await _movieService.GetMovies();
         
-        var response = new ListMoviesDto
-        {
-            Movies = movies.ToList()
-        };
+        //var response = new ListMoviesDto
+        //{
+        //    Movies = movies.ToList()
+        //};
 
         await Send.OkAsync(movies.ToList());
     }

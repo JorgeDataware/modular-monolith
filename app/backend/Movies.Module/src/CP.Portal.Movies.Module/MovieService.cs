@@ -1,4 +1,6 @@
-﻿namespace CP.Portal.Movies.Module;
+﻿using CP.Portal.Movies.Module.Application.GetListMovies;
+
+namespace CP.Portal.Movies.Module;
 
 public class MovieService : IMovieService
 {
