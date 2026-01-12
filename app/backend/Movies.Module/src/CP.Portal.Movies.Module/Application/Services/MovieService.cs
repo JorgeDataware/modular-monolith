@@ -1,8 +1,9 @@
 ﻿using CP.Portal.Movies.Module.Application.GetListMovies;
+using CP.Portal.Movies.Module.Application.Services.IServices;
 
-namespace CP.Portal.Movies.Module;
+namespace CP.Portal.Movies.Module.Application.Services;
 
-public class MovieService : IMovieService
+internal class MovieService : IMovieService
 {
     public async Task<IEnumerable<MovieDto>> GetMovies()
     {

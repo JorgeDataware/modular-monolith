@@ -1,10 +1,11 @@
-﻿using FastEndpoints;
+﻿using CP.Portal.Movies.Module.Application.Services.IServices;
+using FastEndpoints;
 
 namespace CP.Portal.Movies.Module.Application.GetListMovies;
 
-public class GetListMoviesEndpoint(IMovieService movieService) : EndpointWithoutRequest<IEnumerable<MovieDto>>
+internal class GetListMoviesEndpoint(GetListMoviesService movieService) : EndpointWithoutRequest<IEnumerable<MovieDto>>
 {
-    private readonly IMovieService _movieService = movieService;
+    private readonly GetListMoviesService _movieService = movieService;
 
     public override void Configure()
     {
