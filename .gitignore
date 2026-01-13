@@ -58,3 +58,6 @@ nunit-*.xml
 
 # VS settings
 .vs
+
+# Sonarqube
+.sonarqube
