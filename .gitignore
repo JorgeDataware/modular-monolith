@@ -61,3 +61,6 @@ nunit-*.xml
 
 # Sonarqube
 .sonarqube
+
+# Configuraciones de desarrollo
+**/appsettings.Development.json
