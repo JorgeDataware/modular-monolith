@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
-namespace CP.Portal.Movies.Module.Infrastructure;
+namespace CP.Portal.Movies.Module.Infraestructure;
 
 public class MovieDbContext : DbContext
 {

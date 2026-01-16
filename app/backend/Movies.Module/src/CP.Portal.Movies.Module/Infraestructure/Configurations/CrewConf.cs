@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace CP.Portal.Movies.Module.Infrastructure.Configurations;
+namespace CP.Portal.Movies.Module.Infraestructure.Configurations;
 
 internal class CrewConf : IEntityTypeConfiguration<Crew>
 {
