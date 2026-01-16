@@ -1,5 +1,5 @@
 ﻿using CP.Portal.Movies.Module.Application.GetListMovies;
-using CP.Portal.Movies.Module.Infraestructure;
+using CP.Portal.Movies.Module.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
