@@ -1,5 +1,6 @@
 ﻿using CP.Portal.Movies.Module.Application.GetListMovies;
 using CP.Portal.Movies.Module.Infraestructure;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,5 +21,16 @@ public static class MovieServiceExtensions
             opt.UseSqlServer(connectionString);
         });
         return services;
+    }
+
+    public static IApplicationBuilder UseMoviesModuleMigrations(this IApplicationBuilder app)
+    {
+        using (var scope = app.ApplicationServices.CreateScope())
+        {
+            // Aquí dentro SÍ podemos ver MovieDbContext porque estamos dentro del módulo
+            var dbContext = scope.ServiceProvider.GetRequiredService<MovieDbContext>();
+            dbContext.Database.Migrate();
+        }
+        return app;
     }
 }

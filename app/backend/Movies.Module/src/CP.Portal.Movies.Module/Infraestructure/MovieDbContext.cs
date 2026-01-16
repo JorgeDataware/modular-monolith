@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace CP.Portal.Movies.Module.Infraestructure;
 
-public class MovieDbContext : DbContext
+internal class MovieDbContext : DbContext
 {
     public MovieDbContext(DbContextOptions<MovieDbContext> options) : base(options)
     {

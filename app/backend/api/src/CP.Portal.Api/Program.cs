@@ -13,6 +13,8 @@ builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
+app.UseMoviesModuleMigrations();
+
 //app.UseHttpsRedirection();
 
 // Enable Minimal API endpoints for Movies module
