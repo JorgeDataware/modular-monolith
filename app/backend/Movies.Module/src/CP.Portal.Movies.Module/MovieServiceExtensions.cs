@@ -1,5 +1,7 @@
 ﻿using CP.Portal.Movies.Module.Application.GetListMovies;
+using CP.Portal.Movies.Module.Domain.Repositories;
 using CP.Portal.Movies.Module.Infrastructure;
+using CP.Portal.Movies.Module.Utilities.Abstractions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -14,12 +16,19 @@ public static class MovieServiceExtensions
         // Inyecciones de servicios específicos (verticales)
         services.AddScoped<GetListMoviesService>();
 
+        // Inyección de repositorios
+        services.AddScoped<IMovieRepository, MovieRepository>();
+
         // Inyección de MovieDbContext en el contenedor de servicios
         string? connectionString = config.GetConnectionString("MoviesConnectionString");
         services.AddDbContext<MovieDbContext>(opt =>
         {
             opt.UseSqlServer(connectionString);
         });
+
+        // Inyección de la fábrica de conexiones para Dapper
+        services.AddScoped<IMovieConnectionFactory, MovieConnectionFactory>();
+
         return services;
     }
 
