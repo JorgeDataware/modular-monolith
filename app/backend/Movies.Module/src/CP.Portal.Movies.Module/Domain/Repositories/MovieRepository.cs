@@ -1,48 +1,40 @@
-﻿using CP.Portal.Movies.Module.Infrastructure;
-using CP.Portal.Movies.Module.Utilities.Abstractions;
+﻿using CP.Portal.Movies.Module.Domain;
+using CP.Portal.Movies.Module.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace CP.Portal.Movies.Module.Domain.Repositories;
+namespace CP.Portal.Movies.Module.Infrastructure.Repositories;
 
-internal class MovieRepository(MovieDbContext dbContext, IMovieConnectionFactory connectionFactory) : IMovieRepository
+internal class MovieRepository(MovieDbContext dbContext) : IMovieRepository
 {
-    private readonly MovieDbContext _dbContext = dbContext;
-    private readonly IMovieConnectionFactory _connectionFactory = connectionFactory;
-
-    public async Task<Result<string>> AddAsync(Movie movie)
+    public void Add(Movie movie)
     {
-        try
-        {
-            _dbContext.Add(movie);
-            return Result<string>.Success("Movie added successfully");
-        }
-        catch (Exception ex)
-        {
-            return Result<string>.Failure(new Error("MOVIE_ADD_ERROR", ex.Message));
-        }
+        dbContext.movies.Add(movie);
     }
 
-    public async Task<Result<string>> DeleteAsync(Guid Id, CancellationToken ct)
+    public void Delete(Movie movie)
     {
-        try
-        {
-            await _dbContext.movies.
-                Where(m => m.Id == Id)
-                .ExecuteDeleteAsync(ct);
-            return Result<string>.Success("Movie deleted successfully");
-        }
-        catch (Exception ex)
-        {
-            return Result<string>.Failure(new Error("MOVIE_DELETE_ERROR", ex.Message));
-        }
+        dbContext.movies.Remove(movie);
+    }
+
+    public async Task Delete(Guid id, CancellationToken ct)
+    {
+        await dbContext.movies
+           .Where(m => m.Id == id)
+           .ExecuteDeleteAsync(ct);
     }
 
     public async Task<IEnumerable<Movie>> GetAllAsync(CancellationToken ct)
-        => await _dbContext.movies.ToListAsync(ct);
+    {
+        return await dbContext.movies.ToListAsync(ct);
+    }
 
-    public async Task<Movie?> GetByIdAsync(Guid Id, CancellationToken ct)
-        => await _dbContext.movies.FindAsync(Id, ct);
+    public async Task<Movie?> GetByIdAsync(Guid id, CancellationToken ct)
+    {
+        return await dbContext.movies.FirstOrDefaultAsync(m => m.Id == id, ct);
+    }
 
     public async Task SaveChangesAsync(CancellationToken ct)
-        => await _dbContext.SaveChangesAsync(ct);
+    {
+        await dbContext.SaveChangesAsync(ct);
+    }
 }

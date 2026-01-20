@@ -4,7 +4,7 @@ namespace CP.Portal.Movies.Module.Domain.Repositories;
 
 internal interface IMovieRepository : IReadOnlyRepository
 {
-    Task<Result<string>> AddAsync(Movie movie);
-    Task<Result<string>> DeleteAsync(Guid Id, CancellationToken ct);
+    void Add(Movie movie);
+    Task Delete(Guid Id, CancellationToken ct);
     Task SaveChangesAsync(CancellationToken ct);
 }
