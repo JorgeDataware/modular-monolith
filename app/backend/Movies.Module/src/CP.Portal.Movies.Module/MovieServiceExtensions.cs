@@ -1,4 +1,4 @@
-﻿using CP.Portal.Movies.Module.Application.GetListMovies;
+﻿using CP.Portal.Movies.Module.Application.GetListMoviesAsync;
 using CP.Portal.Movies.Module.Domain.Repositories;
 using CP.Portal.Movies.Module.Infrastructure;
 using CP.Portal.Movies.Module.Utilities.Abstractions;

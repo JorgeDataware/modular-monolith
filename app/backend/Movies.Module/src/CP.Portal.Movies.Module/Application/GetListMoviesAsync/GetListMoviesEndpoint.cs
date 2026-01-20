@@ -1,6 +1,6 @@
 ﻿using FastEndpoints;
 
-namespace CP.Portal.Movies.Module.Application.GetListMovies;
+namespace CP.Portal.Movies.Module.Application.GetListMoviesAsync;
 
 internal class GetListMoviesEndpoint(GetListMoviesService movieService) : EndpointWithoutRequest<IEnumerable<MovieDto>>
 {
