@@ -8,9 +8,6 @@ internal class MovieRepository(MovieDbContext dbContext) : IMovieRepository
     public void Add(Movie movie)
         => dbContext.movies.Add(movie);
 
-    public void Delete(Movie movie)
-        => dbContext.movies.Remove(movie);
-
     public async Task Delete(Guid id, CancellationToken ct)
         => await dbContext.movies.Where(m => m.Id == id).ExecuteDeleteAsync(ct);
 
