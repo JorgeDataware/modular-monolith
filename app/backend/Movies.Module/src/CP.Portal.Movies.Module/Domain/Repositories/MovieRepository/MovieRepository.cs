@@ -6,34 +6,20 @@ namespace CP.Portal.Movies.Module.Domain.Repositories.MovieRepository;
 internal class MovieRepository(MovieDbContext dbContext) : IMovieRepository
 {
     public void Add(Movie movie)
-    {
-        dbContext.movies.Add(movie);
-    }
+        => dbContext.movies.Add(movie);
 
     public void Delete(Movie movie)
-    {
-        dbContext.movies.Remove(movie);
-    }
+        => dbContext.movies.Remove(movie);
 
     public async Task Delete(Guid id, CancellationToken ct)
-    {
-        await dbContext.movies
-           .Where(m => m.Id == id)
-           .ExecuteDeleteAsync(ct);
-    }
+        => await dbContext.movies.Where(m => m.Id == id).ExecuteDeleteAsync(ct);
 
     public async Task<IEnumerable<Movie>> GetAllAsync(CancellationToken ct)
-    {
-        return await dbContext.movies.ToListAsync(ct);
-    }
+        => await dbContext.movies.ToListAsync(ct);
 
     public async Task<Movie?> GetByIdAsync(Guid id, CancellationToken ct)
-    {
-        return await dbContext.movies.FirstOrDefaultAsync(m => m.Id == id, ct);
-    }
+        => await dbContext.movies.FirstOrDefaultAsync(m => m.Id == id, ct);
 
     public async Task SaveChangesAsync(CancellationToken ct)
-    {
-        await dbContext.SaveChangesAsync(ct);
-    }
+        => await dbContext.SaveChangesAsync(ct);
 }

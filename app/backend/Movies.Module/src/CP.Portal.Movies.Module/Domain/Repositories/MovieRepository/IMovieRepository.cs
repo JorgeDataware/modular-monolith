@@ -1,6 +1,6 @@
 ﻿namespace CP.Portal.Movies.Module.Domain.Repositories.MovieRepository;
 
-internal interface IMovieRepository : IReadOnlyRepository
+internal interface IMovieRepository
 {
     void Add(Movie movie);
     Task Delete(Guid Id, CancellationToken ct);
