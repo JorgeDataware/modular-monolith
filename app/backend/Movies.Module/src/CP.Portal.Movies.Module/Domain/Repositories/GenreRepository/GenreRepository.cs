@@ -1,5 +1,4 @@
-﻿
-using CP.Portal.Movies.Module.Infrastructure;
+﻿using CP.Portal.Movies.Module.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
 namespace CP.Portal.Movies.Module.Domain.Repositories.GenreRepository;

@@ -8,11 +8,17 @@
 
 	<ItemGroup>
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+		<PackageReference Include="AutoMapper" Version="16.0.0" />
 		<PackageReference Include="Dapper" Version="2.1.66" />
 		<PackageReference Include="EFCore.NamingConventions" Version="10.0.0" />
 		<PackageReference Include="FastEndpoints" Version="7.1.1" />
+		<PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.1" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.2" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.2" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Application\Endpoints\GenreEndpoints\DeleteGenre\" />
 	</ItemGroup>
 
 </Project>
