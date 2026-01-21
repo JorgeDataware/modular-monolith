@@ -1,8 +1,7 @@
-﻿using CP.Portal.Movies.Module.Domain;
-using CP.Portal.Movies.Module.Domain.Repositories;
+﻿using CP.Portal.Movies.Module.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
-namespace CP.Portal.Movies.Module.Infrastructure.Repositories;
+namespace CP.Portal.Movies.Module.Domain.Repositories.MovieRepository;
 
 internal class MovieRepository(MovieDbContext dbContext) : IMovieRepository
 {
