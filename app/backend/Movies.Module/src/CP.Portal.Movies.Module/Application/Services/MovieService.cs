@@ -40,8 +40,12 @@ internal class MovieService(IMovieRepository movieRepository, IValidator<AddMovi
         throw new NotImplementedException();
     }
 
-    public Task<Result<ListMoviesDto>> ListMovieAsync(CancellationToken ct)
+    public async Task<Result<ListMoviesDto>> ListMovieAsync(CancellationToken ct)
     {
-        throw new NotImplementedException();
+        var rawMovies = await _movieRepository.GetAllAsync(ct);
+        var result = new ListMoviesDto();
+        var movies = rawMovies.Select(m => _mapper.Map<MovieDto>(m)).ToList();
+        result.Movies = movies;
+        return Result<ListMoviesDto>.Success(result);
     }
 }

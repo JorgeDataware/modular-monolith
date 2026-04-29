@@ -1,4 +1,5 @@
 ﻿using CP.Portal.Movies.Module.Application.Services.IServices;
+using CP.Portal.Movies.Module.Utilities.Extensions;
 using FastEndpoints;
 
 namespace CP.Portal.Movies.Module.Application.Endpoints.Movie.GetListMoviesAsync;
@@ -13,10 +14,27 @@ internal class GetListMoviesEndpoint(IMovieService movieService) : EndpointWitho
         AllowAnonymous();
     }
 
-    public override async Task HandleAsync(CancellationToken ct=default)
+    public override async Task HandleAsync(CancellationToken ct = default)
     {
-        var movies = await _movieService.ListMovieAsync(ct);
+        var result = await _movieService.ListMovieAsync(ct);
 
-        await Send.OkAsync(movies.Value.Movies, ct);
+        if (result.IsSuccess)
+        {
+            await this.SendStandardSuccessAsync(
+                result.Value.Movies,
+                "Películas obtenidas exitosamente",
+                statusCode: 200,
+                ct: ct
+            );
+        }
+        else
+        {
+            await this.SendStandardFailureAsync<MovieDto>(
+                error: result.Error.Code,
+                message: result.Error.Message,
+                statusCode: 400,
+                ct: ct
+            );
+        }
     }
 }
