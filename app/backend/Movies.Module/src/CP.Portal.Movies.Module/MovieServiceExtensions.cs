@@ -1,6 +1,6 @@
 ﻿using CP.Portal.Movies.Module.Application.Services;
 using CP.Portal.Movies.Module.Application.Services.IServices;
-using CP.Portal.Movies.Module.Domain.Repositories.Movie;
+using CP.Portal.Movies.Module.Domain.Repositories.MovieRepository;
 using CP.Portal.Movies.Module.Infrastructure;
 using CP.Portal.Movies.Module.Utilities.Abstractions;
 using CP.Portal.Movies.Module.Utilities.Validators.Movie;
@@ -31,8 +31,7 @@ public static class MovieServiceExtensions
         });
 
         // Inyección de FluentValidation
-        //services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-        services.AddValidatorsFromAssemblyContaining<MovieInsertValidator>();
+        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly(), includeInternalTypes: true);
 
         // REGISTRO DE AUTOMAPPER
         services.AddAutoMapper(cfg => { cfg.AddMaps(Assembly.GetExecutingAssembly()); });

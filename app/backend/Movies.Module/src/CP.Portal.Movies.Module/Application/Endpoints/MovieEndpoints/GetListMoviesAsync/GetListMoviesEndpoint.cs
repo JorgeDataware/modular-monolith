@@ -1,10 +1,11 @@
-﻿using FastEndpoints;
+﻿using CP.Portal.Movies.Module.Application.Services.IServices;
+using FastEndpoints;
 
 namespace CP.Portal.Movies.Module.Application.Endpoints.Movie.GetListMoviesAsync;
 
-internal class GetListMoviesEndpoint(GetListMoviesService movieService) : EndpointWithoutRequest<IEnumerable<MovieDto>>
+internal class GetListMoviesEndpoint(IMovieService movieService) : EndpointWithoutRequest<IEnumerable<MovieDto>>
 {
-    private readonly GetListMoviesService _movieService = movieService;
+    private readonly IMovieService _movieService = movieService;
 
     public override void Configure()
     {
@@ -14,8 +15,8 @@ internal class GetListMoviesEndpoint(GetListMoviesService movieService) : Endpoi
 
     public override async Task HandleAsync(CancellationToken ct=default)
     {
-        var movies = await _movieService.GetMovies();
+        var movies = await _movieService.ListMovieAsync(ct);
 
-        await Send.OkAsync(movies.ToList());
+        await Send.OkAsync(movies.Value.Movies, ct);
     }
 }

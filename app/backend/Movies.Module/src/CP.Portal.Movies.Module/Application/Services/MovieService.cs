@@ -27,7 +27,7 @@ internal class MovieService(IMovieRepository movieRepository, IValidator<AddMovi
         var movie = _mapper.Map<Movie>(request);
         _movieRepository.Add(movie);
 
-
+        return Result<string>.Success(movie.Id.ToString());
     }
 
     public Task<Result<string>> DeleteMovieAsync(Guid id, CancellationToken ct)
