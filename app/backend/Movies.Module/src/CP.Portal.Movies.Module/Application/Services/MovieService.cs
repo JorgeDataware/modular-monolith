@@ -5,6 +5,7 @@ using CP.Portal.Movies.Module.Application.Services.IServices;
 using CP.Portal.Movies.Module.Domain;
 using CP.Portal.Movies.Module.Domain.Repositories.MovieRepository;
 using CP.Portal.Movies.Module.Utilities.Abstractions;
+using CP.Portal.Movies.Module.Utilities.Errors;
 using FluentValidation;
 
 namespace CP.Portal.Movies.Module.Application.Services;
@@ -20,32 +21,53 @@ internal class MovieService(IMovieRepository movieRepository, IValidator<AddMovi
         var val = _validator.Validate(request);
         if (!val.IsValid)
         {
-            var errors = string.Join("; ", val.Errors.Select(e => e.ErrorMessage));
-            return Result<string>.Failure(new Error("ValidationError", errors));
+            var error = val.Errors.FirstOrDefault();
+            return Result<string>.Failure(new Error("CreateMovieError", error.ErrorMessage!));
         }
 
         var movie = _mapper.Map<Movie>(request);
-        _movieRepository.Add(movie);
+        await _movieRepository.AddAsync(movie, ct);
+        await _movieRepository.SaveChangesAsync(ct);
 
         return Result<string>.Success(movie.Id.ToString());
     }
 
-    public Task<Result<string>> DeleteMovieAsync(Guid id, CancellationToken ct)
+    public async Task<Result<string>> DeleteMovieAsync(Guid id, CancellationToken ct)
     {
-        throw new NotImplementedException();
+        var rows = await _movieRepository.DeleteAsync(id, ct);
+
+        if (rows < 1)
+            return Result<string>.Failure(MovieErrors.MovieNotFound);
+
+        return Result<string>.Success("The movie was successfully deleted");
     }
 
-    public Task<Result<MovieDto>> GetMovieByIdAsync(Guid id, CancellationToken ct)
+    public async Task<Result<MovieDto>> GetMovieByIdAsync(Guid id, CancellationToken ct)
     {
-        throw new NotImplementedException();
+        var movie = await _movieRepository.GetByIdAsync(id, ct);
+
+        if (movie == null)
+            return Result<MovieDto>.Failure(MovieErrors.MovieNotFound);
+
+        return Result<MovieDto>.Success(_mapper.Map<MovieDto>(movie));
     }
 
-    public async Task<Result<ListMoviesDto>> ListMovieAsync(CancellationToken ct)
+    public async Task<Result<IEnumerable<MovieDto>>> ListMovieAsync(CancellationToken ct)
     {
         var rawMovies = await _movieRepository.GetAllAsync(ct);
-        var result = new ListMoviesDto();
-        var movies = rawMovies.Select(m => _mapper.Map<MovieDto>(m)).ToList();
-        result.Movies = movies;
-        return Result<ListMoviesDto>.Success(result);
+
+        IEnumerable<MovieDto> result = rawMovies.Select(m => new MovieDto
+        (
+            m.Id,
+            m.Title,
+            m.Description
+        ));
+
+        return Result<IEnumerable<MovieDto>>.Success(result);
+    }
+
+    public Task<Result<Guid>> UpdateMoviePrice(Guid id, decimal price)
+    {
+        throw new NotImplementedException();
     }
 }
