@@ -1,9 +1,9 @@
 ﻿using CP.Portal.Movies.Module.Application.Services;
 using CP.Portal.Movies.Module.Application.Services.IServices;
+using CP.Portal.Movies.Module.Domain.Repositories.GenreRepository;
 using CP.Portal.Movies.Module.Domain.Repositories.MovieRepository;
 using CP.Portal.Movies.Module.Infrastructure;
 using CP.Portal.Movies.Module.Utilities.Abstractions;
-using CP.Portal.Movies.Module.Utilities.Validators.Movie;
 using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -19,9 +19,11 @@ public static class MovieServiceExtensions
     {
         // Inyección de servicios
         services.AddScoped<IMovieService, MovieService>();
+        services.AddScoped<IGenreService, GenreService>();
 
         // Inyección de repositorios
         services.AddScoped<IMovieRepository, MovieRepository>();
+        services.AddScoped<IGenreRepository, GenreRepository>();
 
         // Inyección de MovieDbContext en el contenedor de servicios
         string? connectionString = config.GetConnectionString("MoviesConnectionString");

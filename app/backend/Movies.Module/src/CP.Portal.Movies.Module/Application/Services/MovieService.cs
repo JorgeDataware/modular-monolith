@@ -39,6 +39,8 @@ internal class MovieService(IMovieRepository movieRepository, IValidator<AddMovi
         if (rows < 1)
             return Result<string>.Failure(MovieErrors.MovieNotFound);
 
+        await _movieRepository.SaveChangesAsync(ct);
+
         return Result<string>.Success("The movie was successfully deleted");
     }
 
@@ -66,8 +68,15 @@ internal class MovieService(IMovieRepository movieRepository, IValidator<AddMovi
         return Result<IEnumerable<MovieDto>>.Success(result);
     }
 
-    public Task<Result<Guid>> UpdateMoviePrice(Guid id, decimal price)
+    public async Task<Result<Guid>> UpdateMoviePrice(Guid id, decimal price, CancellationToken ct)
     {
-        throw new NotImplementedException();
+        var movie = await _movieRepository.GetByIdAsync(id, ct);
+        if (movie == null)
+            return Result<Guid>.Failure(MovieErrors.MovieNotFound);
+
+        movie.RentalPrice = price;
+        await _movieRepository.SaveChangesAsync(ct);
+
+        return Result<Guid>.Success(movie.Id);
     }
-}
+}   

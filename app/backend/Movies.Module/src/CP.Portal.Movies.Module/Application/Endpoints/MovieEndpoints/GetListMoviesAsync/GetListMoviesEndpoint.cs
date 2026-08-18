@@ -21,7 +21,7 @@ internal class GetListMoviesEndpoint(IMovieService movieService) : EndpointWitho
         if (result.IsSuccess)
         {
             await this.SendStandardSuccessAsync(
-                result.Value.Movies,
+                result.Value,
                 "Películas obtenidas exitosamente",
                 statusCode: 200,
                 ct: ct
