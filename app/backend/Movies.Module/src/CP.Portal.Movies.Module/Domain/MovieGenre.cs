@@ -2,9 +2,9 @@
 
 internal class MovieGenre
 {
-    public Guid MovieId { get; private set; }
-    public Guid GenreId { get; private set; }
+    public Guid MovieId { get; set; }
+    public Guid GenreId { get; set; }
 
-    public Movie Movie { get; private set; } = null!;
-    public Genre Genre { get; private set; } = null!;
+    public Movie Movie { get; set; } = null!;
+    public Genre Genre { get; set; } = null!;
 }
