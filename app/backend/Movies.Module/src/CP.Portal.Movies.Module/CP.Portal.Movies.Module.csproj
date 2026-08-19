@@ -18,9 +18,4 @@
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.11" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Application\Endpoints\GenreEndpoints\DeleteGenre\" />
-	  <Folder Include="Application\Endpoints\PersonEndpoints\" />
-	</ItemGroup>
-
 </Project>
