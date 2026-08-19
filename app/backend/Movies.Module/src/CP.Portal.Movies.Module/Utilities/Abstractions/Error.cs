@@ -2,8 +2,6 @@
 
 public class Error
 {
-    private string v;
-
     public string Code { get; }
     public string Message { get; }
     public int HttpCode { get; }
@@ -15,8 +13,6 @@ public class Error
         HttpCode = httpCode;
     }
 
-    public Error(string v)
-    {
-        this.v = v;
-    }
+    public static Error Validation(string message) => new("ValidationError", message, 400);
+
 }
