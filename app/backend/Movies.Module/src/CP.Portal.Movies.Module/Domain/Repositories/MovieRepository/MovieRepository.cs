@@ -8,7 +8,7 @@ internal class MovieRepository(MovieDbContext dbContext) : IMovieRepository
     private readonly MovieDbContext _dbContext = dbContext;
 
     public async Task AddAsync(Movie movie, CancellationToken ct)
-        => await _dbContext.movies.AddAsync(movie);
+        => await _dbContext.movies.AddAsync(movie, ct);
 
     public async Task<int> DeleteAsync(Guid id, CancellationToken ct)
         => await _dbContext.movies.Where(m => m.Id == id).ExecuteDeleteAsync(ct);
@@ -18,6 +18,9 @@ internal class MovieRepository(MovieDbContext dbContext) : IMovieRepository
 
     public async Task<Movie?> GetByIdAsync(Guid id, CancellationToken ct)
         => await _dbContext.movies.AsNoTracking().FirstOrDefaultAsync(m => m.Id == id, ct);
+
+    public async Task<Movie?> GetMovieAsync(Guid id, CancellationToken ct)
+        => await _dbContext.movies.FirstOrDefaultAsync(m => m.Id == id, ct);
 
     public async Task SaveChangesAsync(CancellationToken ct)
         => await _dbContext.SaveChangesAsync(ct);

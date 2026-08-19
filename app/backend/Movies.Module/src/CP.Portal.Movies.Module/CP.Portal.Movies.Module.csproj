@@ -20,6 +20,7 @@
 
 	<ItemGroup>
 	  <Folder Include="Application\Endpoints\GenreEndpoints\DeleteGenre\" />
+	  <Folder Include="Application\Endpoints\PersonEndpoints\" />
 	</ItemGroup>
 
 </Project>

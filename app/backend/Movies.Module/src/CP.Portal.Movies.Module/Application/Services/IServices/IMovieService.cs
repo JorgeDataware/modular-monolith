@@ -10,5 +10,5 @@ internal interface IMovieService
     Task<Result<MovieDto>> GetMovieByIdAsync(Guid id, CancellationToken ct);
     Task<Result<string>> CreateMovieAsync(AddMovieRequest request, CancellationToken ct);
     Task<Result<string>> DeleteMovieAsync(Guid id, CancellationToken ct);
-    Task<Result<Guid>> UpdateMoviePrice(Guid id, decimal price);
+    Task<Result<Guid>> UpdateMoviePrice(Guid id, decimal price, CancellationToken ct);
 }

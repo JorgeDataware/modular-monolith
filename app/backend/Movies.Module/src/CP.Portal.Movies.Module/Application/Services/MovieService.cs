@@ -70,13 +70,17 @@ internal class MovieService(IMovieRepository movieRepository, IValidator<AddMovi
 
     public async Task<Result<Guid>> UpdateMoviePrice(Guid id, decimal price, CancellationToken ct)
     {
-        var movie = await _movieRepository.GetByIdAsync(id, ct);
+        var movie = await _movieRepository.GetMovieAsync(id, ct);
+
         if (movie == null)
             return Result<Guid>.Failure(MovieErrors.MovieNotFound);
+
+        if (movie.RentalPrice == price)
+            return Result<Guid>.Success(id);
 
         movie.RentalPrice = price;
         await _movieRepository.SaveChangesAsync(ct);
 
-        return Result<Guid>.Success(movie.Id);
+        return Result<Guid>.Success(id);
     }
 }   
