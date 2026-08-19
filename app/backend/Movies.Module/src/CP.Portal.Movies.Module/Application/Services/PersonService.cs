@@ -1,21 +1,45 @@
-﻿using CP.Portal.Movies.Module.Application.Endpoints.PersonEndpoints.AddPersonAsync;
+﻿using AutoMapper;
+using CP.Portal.Movies.Module.Application.Endpoints.PersonEndpoints.AddPersonAsync;
 using CP.Portal.Movies.Module.Application.Services.IServices;
+using CP.Portal.Movies.Module.Domain;
+using CP.Portal.Movies.Module.Domain.Repositories.PersonRepository;
 using CP.Portal.Movies.Module.Utilities.Abstractions;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using CP.Portal.Movies.Module.Utilities.Errors;
+using CP.Portal.Movies.Module.Utilities.Extensions;
+using FluentValidation;
 
 namespace CP.Portal.Movies.Module.Application.Services;
 
-internal class PersonService : IPersonService
+internal class PersonService(IPersonRepository personRepository, IValidator<AddPersonRequest> validator, IMapper mapper) : IPersonService
 {
-    public Task<Result<Guid>> AddPersonAsync(AddPersonRequest request, CancellationToken ct)
+    private readonly IPersonRepository _personRepository = personRepository;
+    private readonly IValidator<AddPersonRequest> _validator = validator;
+    private readonly IMapper _mapper = mapper;
+
+    public async Task<Result<string>> AddPersonAsync(AddPersonRequest request, CancellationToken ct)
     {
-        throw new NotImplementedException();
+        var val = await _validator.ValidateAsync(request);
+
+        if (!val.IsValid)
+            return val.ToFailure<string>();
+
+        var person = _mapper.Map<Person>(request);
+
+        await _personRepository.AddPersonAsync(person, ct);
+        await _personRepository.SaveChangesAsync(ct);
+
+        return Result<string>.Success(person.Id.ToString());
     }
 
-    public Task<Result<Guid>> DeletePersonAsync(Guid Id, CancellationToken ct)
+    public async Task<Result<Guid>> DeletePersonAsync(Guid Id, CancellationToken ct)
     {
-        throw new NotImplementedException();
+        var result = await _personRepository.DeletePerson(Id, ct);
+
+        if (result < 1)
+            return Result<Guid>.Failure(PersonErrors.PersonNotFound);
+
+        return Result<Guid>.Success(Id);
     }
+
+
 }

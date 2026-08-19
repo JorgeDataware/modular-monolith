@@ -8,6 +8,7 @@ namespace CP.Portal.Movies.Module.Application.Services.IServices;
 
 internal interface IPersonService
 {
-    Task<Result<Guid>> AddPersonAsync(AddPersonRequest request, CancellationToken ct);
+    Task<Result<string>> AddPersonAsync(AddPersonRequest request, CancellationToken ct);
     Task<Result<Guid>> DeletePersonAsync(Guid Id, CancellationToken ct);
+    Task<Result<>>
 }
