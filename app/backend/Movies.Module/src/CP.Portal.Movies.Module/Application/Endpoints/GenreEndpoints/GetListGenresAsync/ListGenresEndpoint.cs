@@ -2,9 +2,6 @@
 using CP.Portal.Movies.Module.Utilities.Abstractions;
 using CP.Portal.Movies.Module.Utilities.Extensions;
 using FastEndpoints;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CP.Portal.Movies.Module.Application.Endpoints.GenreEndpoints.GetListGenresAsync;
 
