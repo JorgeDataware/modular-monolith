@@ -6,6 +6,7 @@ using CP.Portal.Movies.Module.Domain;
 using CP.Portal.Movies.Module.Domain.Repositories.MovieRepository;
 using CP.Portal.Movies.Module.Utilities.Abstractions;
 using CP.Portal.Movies.Module.Utilities.Errors;
+using CP.Portal.Movies.Module.Utilities.Extensions;
 using FluentValidation;
 
 namespace CP.Portal.Movies.Module.Application.Services;
@@ -18,12 +19,9 @@ internal class MovieService(IMovieRepository movieRepository, IValidator<AddMovi
 
     public async Task<Result<string>> CreateMovieAsync(AddMovieRequest request, CancellationToken ct)
     {
-        var val = _validator.Validate(request);
+        var val = await _validator.ValidateAsync(request);
         if (!val.IsValid)
-        {
-            var error = val.Errors.FirstOrDefault();
-            return Result<string>.Failure(new Error("CreateMovieError", error.ErrorMessage!));
-        }
+            return val.ToFailure<string>();
 
         var movie = _mapper.Map<Movie>(request);
         await _movieRepository.AddAsync(movie, ct);

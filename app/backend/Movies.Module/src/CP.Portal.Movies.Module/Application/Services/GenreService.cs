@@ -5,6 +5,7 @@ using CP.Portal.Movies.Module.Application.Services.IServices;
 using CP.Portal.Movies.Module.Domain;
 using CP.Portal.Movies.Module.Domain.Repositories.GenreRepository;
 using CP.Portal.Movies.Module.Utilities.Abstractions;
+using CP.Portal.Movies.Module.Utilities.Extensions;
 using FluentValidation;
 
 namespace CP.Portal.Movies.Module.Application.Services;
@@ -19,10 +20,7 @@ internal class GenreService(IGenreRepository genreRepository, IValidator<AddGenr
     {
         var val = await _validator.ValidateAsync(request, ct);
         if (!val.IsValid)
-        {
-            var errors = string.Join("; ", val.Errors.Select(e => e.ErrorMessage));
-            return Result<string>.Failure(new Error("ValidationError", errors));
-        }
+            return val.ToFailure<string>();
 
         var genre = _mapper.Map<Genre>(request);
 
