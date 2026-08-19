@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CP.Portal.Movies.Module.Application.Endpoints.GenreEndpoints.CreateGenre;
+﻿namespace CP.Portal.Movies.Module.Application.Endpoints.GenreEndpoints.CreateGenre;
 
 internal record AddGenreRequest
 (
