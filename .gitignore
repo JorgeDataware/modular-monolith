@@ -64,3 +64,4 @@ nunit-*.xml
 
 # Configuraciones de desarrollo
 **/appsettings.Development.json
+/app/backend/api/src/CP.Portal.Api/appsettings.Development.json
