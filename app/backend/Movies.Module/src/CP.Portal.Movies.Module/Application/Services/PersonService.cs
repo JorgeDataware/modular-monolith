@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CP.Portal.Movies.Module.Application.Endpoints.PersonEndpoints.AddPersonAsync;
+using CP.Portal.Movies.Module.Application.Endpoints.PersonEndpoints.ListPersons;
 using CP.Portal.Movies.Module.Application.Services.IServices;
 using CP.Portal.Movies.Module.Domain;
 using CP.Portal.Movies.Module.Domain.Repositories.PersonRepository;
@@ -41,5 +42,14 @@ internal class PersonService(IPersonRepository personRepository, IValidator<AddP
         return Result<Guid>.Success(Id);
     }
 
+    public async Task<Result<IEnumerable<ListPersonDto>>> ListPersonsAsync(CancellationToken ct)
+    {
+        var result = await _personRepository.GetAllPersonsAsync(ct);
 
+        return Result<IEnumerable<ListPersonDto>>.Success(result.Select(p => new ListPersonDto(
+                p.Id,
+                p.FirstName,
+                p.LastName
+            )));
+    }
 }
