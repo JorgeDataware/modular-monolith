@@ -2,6 +2,7 @@
 using CP.Portal.Movies.Module.Application.Endpoints.PersonEndpoints.AddPersonAsync;
 using CP.Portal.Movies.Module.Application.Endpoints.PersonEndpoints.GetPersonById;
 using CP.Portal.Movies.Module.Application.Endpoints.PersonEndpoints.ListPersons;
+using CP.Portal.Movies.Module.Application.Endpoints.PersonEndpoints.UpdatePerson;
 using CP.Portal.Movies.Module.Application.Services.IServices;
 using CP.Portal.Movies.Module.Domain;
 using CP.Portal.Movies.Module.Domain.Repositories.PersonRepository;
@@ -20,7 +21,7 @@ internal class PersonService(IPersonRepository personRepository, IValidator<AddP
 
     public async Task<Result<string>> AddPersonAsync(AddPersonRequest request, CancellationToken ct)
     {
-        var val = await _validator.ValidateAsync(request);
+        var val = await _validator.ValidateAsync(request, ct);
 
         if (!val.IsValid)
             return val.ToFailure<string>();
@@ -62,5 +63,24 @@ internal class PersonService(IPersonRepository personRepository, IValidator<AddP
                 p.FirstName,
                 p.LastName
             )));
+    }
+
+    public async Task<Result<Guid>> UpdatePersonAsync(UpdatePersonRequest request, CancellationToken ct)
+    {
+        var validation = await _validator.ValidateAsync(request, ct);
+
+        if (!validation.IsValid)
+            return validation.ToFailure<Guid>();
+
+        var person = await _personRepository.GetPersonTrackedByIdAsync(request.Id, ct);
+
+        if (person is null)
+            return Result<Guid>.Failure(new Error("PersonNotFound", "La persona no existe", 404));
+
+        _mapper.Map(request, person);
+
+        await _personRepository.SaveChangesAsync(ct);
+
+        return Result<Guid>.Success(request.Id);
     }
 }

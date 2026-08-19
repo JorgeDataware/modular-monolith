@@ -1,0 +1,21 @@
+﻿using CP.Portal.Movies.Module.Application.Services.IServices;
+using CP.Portal.Movies.Module.Utilities.Abstractions;
+using FastEndpoints;
+
+namespace CP.Portal.Movies.Module.Application.Endpoints.PersonEndpoints.UpdatePerson;
+
+internal class UpdatePersonEnndpoint(IPersonService personService) : Endpoint<UpdatePersonRequest, ApiResponse<Guid>>
+{
+    private readonly IPersonService _personService = personService;
+
+    public override void Configure()
+    {
+        Patch("api/Persons/{Id}");
+        AllowAnonymous();
+    }
+
+    public override async Task HandleAsync(CancellationToken ct)
+    {
+        var res
+    }
+}
