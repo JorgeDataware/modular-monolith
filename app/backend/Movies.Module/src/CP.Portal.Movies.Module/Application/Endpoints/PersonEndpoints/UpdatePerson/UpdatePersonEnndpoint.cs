@@ -1,5 +1,6 @@
 ﻿using CP.Portal.Movies.Module.Application.Services.IServices;
 using CP.Portal.Movies.Module.Utilities.Abstractions;
+using CP.Portal.Movies.Module.Utilities.Extensions;
 using FastEndpoints;
 
 namespace CP.Portal.Movies.Module.Application.Endpoints.PersonEndpoints.UpdatePerson;
@@ -14,8 +15,10 @@ internal class UpdatePersonEnndpoint(IPersonService personService) : Endpoint<Up
         AllowAnonymous();
     }
 
-    public override async Task HandleAsync(CancellationToken ct)
+    public override async Task HandleAsync(UpdatePersonRequest request, CancellationToken ct)
     {
-        var res
+        var result = await _personService.UpdatePersonAsync(request, ct);
+
+        await this.SendApiResponseAsync(result, "Persona actualizada correctamente");
     }
 }

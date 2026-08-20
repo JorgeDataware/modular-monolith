@@ -13,15 +13,20 @@ using FluentValidation;
 
 namespace CP.Portal.Movies.Module.Application.Services;
 
-internal class PersonService(IPersonRepository personRepository, IValidator<AddPersonRequest> validator, IMapper mapper) : IPersonService
+internal class PersonService(
+    IPersonRepository personRepository,
+    IValidator<AddPersonRequest> addValidator,
+    IValidator<UpdatePersonRequest> updateValidator,
+    IMapper mapper) : IPersonService
 {
     private readonly IPersonRepository _personRepository = personRepository;
-    private readonly IValidator<AddPersonRequest> _validator = validator;
+    private readonly IValidator<AddPersonRequest> _addValidator = addValidator;
+    private readonly IValidator<UpdatePersonRequest> _updateValidator = updateValidator;
     private readonly IMapper _mapper = mapper;
 
     public async Task<Result<string>> AddPersonAsync(AddPersonRequest request, CancellationToken ct)
     {
-        var val = await _validator.ValidateAsync(request, ct);
+        var val = await _addValidator.ValidateAsync(request, ct);
 
         if (!val.IsValid)
             return val.ToFailure<string>();
@@ -67,7 +72,7 @@ internal class PersonService(IPersonRepository personRepository, IValidator<AddP
 
     public async Task<Result<Guid>> UpdatePersonAsync(UpdatePersonRequest request, CancellationToken ct)
     {
-        var validation = await _validator.ValidateAsync(request, ct);
+        var validation = await _updateValidator.ValidateAsync(request, ct);
 
         if (!validation.IsValid)
             return validation.ToFailure<Guid>();
