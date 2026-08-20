@@ -7,8 +7,8 @@ internal class GenreRepository(MovieDbContext dbContext) : IGenreRepository
 {
     private readonly MovieDbContext _dbContext = dbContext;
 
-    public void Add(Genre genre)
-        => _dbContext.genres.Add(genre);
+    public async Task Add(Genre genre, CancellationToken ct)
+        => await _dbContext.genres.AddAsync(genre, ct);
 
     public async Task Delete(Guid Id, CancellationToken ct)
         => await _dbContext.genres.Where(m => m.Id == Id).ExecuteDeleteAsync(ct);

@@ -24,7 +24,8 @@ internal class GenreService(IGenreRepository genreRepository, IValidator<AddGenr
 
         var genre = _mapper.Map<Genre>(request);
 
-        _genreRepository.Add(genre);
+        await _genreRepository.Add(genre, ct);
+        await _genreRepository.SaveChangesAsync(ct);
         return Result<string>.Success(genre.Id.ToString());
     }
 
