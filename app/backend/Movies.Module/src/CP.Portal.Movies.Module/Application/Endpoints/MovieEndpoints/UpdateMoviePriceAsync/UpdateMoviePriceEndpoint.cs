@@ -12,7 +12,7 @@ internal class UpdateMoviePriceEndpoint(IMovieService movieService)
 
     public override void Configure()
     {
-        Patch("/api/movies/{Id}/price");
+        Patch("/api/Movie/{Id}/price");
         AllowAnonymous();
     }
 

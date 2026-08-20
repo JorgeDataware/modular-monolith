@@ -11,7 +11,7 @@ internal class UpdatePersonEnndpoint(IPersonService personService) : Endpoint<Up
 
     public override void Configure()
     {
-        Patch("api/Persons/{Id}");
+        Patch("/api/Person/{Id}");
         AllowAnonymous();
     }
 

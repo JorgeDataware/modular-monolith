@@ -11,7 +11,7 @@ internal class DeletePersonEndpoint(IPersonService personService) : EndpointWith
 
     public override void Configure()
     {
-        Delete("api/Persons/{Id}");
+        Delete("/api/Person/{Id}");
         AllowAnonymous();
     }
 

@@ -11,7 +11,7 @@ internal class ListGenresEndpoint(IGenreService genreService) : EndpointWithoutR
 
     public override void Configure()
     {
-        Get("api/Genre/all");
+        Get("/api/Genre/all");
         AllowAnonymous();
     }
 

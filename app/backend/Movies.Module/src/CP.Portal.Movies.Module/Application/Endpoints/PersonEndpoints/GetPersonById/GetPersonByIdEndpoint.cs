@@ -11,7 +11,7 @@ internal class GetPersonByIdEndpoint(IPersonService personService) : EndpointWit
 
     public override void Configure()
     {
-        Get("api/Persons/{Id}");
+        Get("/api/Person/{Id}");
         AllowAnonymous();
     }
 

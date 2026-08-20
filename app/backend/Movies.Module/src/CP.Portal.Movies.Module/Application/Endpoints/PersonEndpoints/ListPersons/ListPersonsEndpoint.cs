@@ -10,7 +10,7 @@ internal class ListPersonsEndpoint(IPersonService personService) : EndpointWitho
 
     public override void Configure()
     {
-        Get("api/Persons");
+        Get("/api/Person");
         AllowAnonymous();
     }
 

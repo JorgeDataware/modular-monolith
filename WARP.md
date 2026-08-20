@@ -61,6 +61,16 @@ dotnet run --project app\backend\api\src\CP.Portal.Api\CP.Host.Api.csproj
 # - HTTPS: https://localhost:7025 or http://localhost:5275
 ```
 
+### API Documentation (Scalar)
+
+In Development the app serves interactive API docs and opens them in the browser automatically on startup
+(`launchBrowser` + `launchUrl: "scalar"` in `Properties/launchSettings.json`).
+
+```powershell
+# OpenAPI document: http://localhost:5000/openapi/v1.json
+# Scalar UI:        http://localhost:5000/scalar
+```
+
 ### Database Migrations
 
 **IMPORTANT**: Migrations are automatically applied on startup via `UseMoviesModuleMigrations()` in Program.cs.

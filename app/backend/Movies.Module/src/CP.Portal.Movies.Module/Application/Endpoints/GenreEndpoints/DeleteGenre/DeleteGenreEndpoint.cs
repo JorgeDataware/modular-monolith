@@ -12,7 +12,7 @@ internal class DeleteGenreEndpoint(IGenreService genreService)
 
     public override void Configure()
     {
-        Delete("/api/genres/{Id}");
+        Delete("/api/Genre/{Id}");
         AllowAnonymous();
     }
 

@@ -2,6 +2,7 @@
 using CP.Portal.Movies.Module.Application.Services.IServices;
 using CP.Portal.Movies.Module.Domain.Repositories.GenreRepository;
 using CP.Portal.Movies.Module.Domain.Repositories.MovieRepository;
+using CP.Portal.Movies.Module.Domain.Repositories.PersonRepository;
 using CP.Portal.Movies.Module.Infrastructure;
 using CP.Portal.Movies.Module.Utilities.Abstractions;
 using FluentValidation;
@@ -20,10 +21,12 @@ public static class MovieServiceExtensions
         // Inyección de servicios
         services.AddScoped<IMovieService, MovieService>();
         services.AddScoped<IGenreService, GenreService>();
+        services.AddScoped<IPersonService, PersonService>();
 
         // Inyección de repositorios
         services.AddScoped<IMovieRepository, MovieRepository>();
         services.AddScoped<IGenreRepository, GenreRepository>();
+        services.AddScoped<IPersonRepository, PersonRepository>();
 
         // Inyección de MovieDbContext en el contenedor de servicios
         string? connectionString = config.GetConnectionString("MoviesConnectionString");

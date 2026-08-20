@@ -12,7 +12,7 @@ internal class AddGenreEndpoint(IGenreService genreService) : Endpoint<AddGenreR
 
     public override void Configure()
     {
-        Post("api/Genre");
+        Post("/api/Genre");
         AllowAnonymous();
     }
 

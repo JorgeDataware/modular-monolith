@@ -12,7 +12,7 @@ internal class GetListMoviesEndpoint(IMovieService movieService)
 
     public override void Configure()
     {
-        Get("/api/movies/all");
+        Get("/api/Movie/all");
         AllowAnonymous();
     }
 
