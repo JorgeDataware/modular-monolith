@@ -6,12 +6,12 @@ namespace CP.Portal.Movies.Module.Utilities.Abstractions;
 
 internal interface IMovieConnectionFactory
 {
-    IDbConnection CreateConnection();
+    Task<IDbConnection> CreateConnection();
 }
 
 internal class MovieConnectionFactory(IConfiguration configuration) : IMovieConnectionFactory
 {
-    public IDbConnection CreateConnection()
+    public async Task<IDbConnection> CreateConnection()
     {
         string? connectionString = configuration.GetConnectionString("MoviesConnectionString");
         return new SqlConnection(connectionString);

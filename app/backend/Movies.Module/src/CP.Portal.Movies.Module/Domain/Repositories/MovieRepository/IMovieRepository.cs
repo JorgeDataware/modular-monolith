@@ -1,4 +1,6 @@
-﻿namespace CP.Portal.Movies.Module.Domain.Repositories.MovieRepository;
+﻿using CP.Portal.Movies.Module.Application.Endpoints.MovieEndpoints.GetMovieByIdAsync;
+
+namespace CP.Portal.Movies.Module.Domain.Repositories.MovieRepository;
 
 internal interface IMovieRepository
 {
@@ -8,4 +10,5 @@ internal interface IMovieRepository
     Task<Movie?> GetMovieAsync(Guid Id, CancellationToken ct);
     Task<IEnumerable<Movie>> GetAllAsync(CancellationToken ct);
     Task SaveChangesAsync(CancellationToken ct);
+    Task<GetMovieDetailByIdDto?> GetMovieDetailAsync(Guid Id, CancellationToken ct);
 }

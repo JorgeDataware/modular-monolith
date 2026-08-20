@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CP.Portal.Movies.Module.Application.Endpoints.Movie.CreateMovie;
 using CP.Portal.Movies.Module.Application.Endpoints.Movie.GetListMoviesAsync;
+using CP.Portal.Movies.Module.Application.Endpoints.MovieEndpoints.GetMovieByIdAsync;
 using CP.Portal.Movies.Module.Application.Services.IServices;
 using CP.Portal.Movies.Module.Domain;
 using CP.Portal.Movies.Module.Domain.Repositories.MovieRepository;
@@ -47,8 +48,15 @@ internal class MovieService(IMovieRepository movieRepository, IValidator<AddMovi
             Role = c.role
         }).ToList();
 
+        var genres = request.Genres.Select(g => new MovieGenre
+        {
+            MovieId = movie.Id,
+            GenreId = g
+        }).ToList();
+
         movie.Casts = casters;
         movie.Crewers = crewers;
+        movie.MovieGenres = genres;
 
         await _movieRepository.AddAsync(movie, ct);
         await _movieRepository.SaveChangesAsync(ct);
@@ -68,14 +76,14 @@ internal class MovieService(IMovieRepository movieRepository, IValidator<AddMovi
         return Result<string>.Success("The movie was successfully deleted");
     }
 
-    public async Task<Result<MovieDto>> GetMovieByIdAsync(Guid id, CancellationToken ct)
+    public async Task<Result<GetMovieDetailByIdDto>> GetMovieByIdAsync(Guid id, CancellationToken ct)
     {
-        var movie = await _movieRepository.GetByIdAsync(id, ct);
+        var movie = await _movieRepository.GetMovieDetailAsync(id, ct);
 
-        if (movie == null)
-            return Result<MovieDto>.Failure(MovieErrors.MovieNotFound);
+        if (movie is null)
+            return Result<GetMovieDetailByIdDto>.Failure(MovieErrors.MovieNotFound);
 
-        return Result<MovieDto>.Success(_mapper.Map<MovieDto>(movie));
+        return Result<GetMovieDetailByIdDto>.Success(movie);
     }
 
     public async Task<Result<IEnumerable<MovieDto>>> ListMovieAsync(CancellationToken ct)
