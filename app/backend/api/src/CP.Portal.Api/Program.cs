@@ -1,3 +1,4 @@
+using CP.Portal.Api.OpenApi;
 using CP.Portal.Movies.Module;
 using FastEndpoints;
 using Scalar.AspNetCore;
@@ -10,7 +11,12 @@ builder.Services.MovieService(builder.Configuration);
 // Inyectar FastEndpoints
 builder.Services.AddFastEndpoints();
 
-builder.Services.AddOpenApi();
+builder.Services.AddOpenApi(options =>
+{
+    // El Id viaja por la URL, no en el cuerpo de la petición
+    options.AddSchemaTransformer<RouteParamSchemaTransformer>();
+    options.AddOperationTransformer<RouteParamOperationTransformer>();
+});
 
 var app = builder.Build();
 

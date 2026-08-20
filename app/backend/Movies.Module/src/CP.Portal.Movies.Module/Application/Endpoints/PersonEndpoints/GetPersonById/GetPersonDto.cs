@@ -7,7 +7,7 @@ namespace CP.Portal.Movies.Module.Application.Endpoints.PersonEndpoints.GetPerso
 internal record GetPersonDto
 (
     Guid Id,
-    string FisrtName,
+    string FirstName,
     string LastName,
     string Bio
 );
