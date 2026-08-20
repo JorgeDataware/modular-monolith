@@ -7,5 +7,13 @@ internal record AddMovieRequest(
     int DurationMinutes,
     string Language,
     decimal RentalPrice,
-    List<Guid> Genres
+    IEnumerable<Guid> Genres,
+    IEnumerable<Participant> Casters,
+    IEnumerable<Participant> Crewers
+);
+
+internal record Participant
+(
+    Guid PersonId,
+    string role
 );

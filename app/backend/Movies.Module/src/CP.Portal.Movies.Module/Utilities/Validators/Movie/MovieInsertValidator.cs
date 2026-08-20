@@ -1,4 +1,4 @@
-﻿using CP.Portal.Movies.Module.Application.Endpoints.Movie.CreateMovie;
+using CP.Portal.Movies.Module.Application.Endpoints.Movie.CreateMovie;
 using FluentValidation;
 
 namespace CP.Portal.Movies.Module.Utilities.Validators.Movie;
@@ -21,5 +21,33 @@ internal class MovieInsertValidator : AbstractValidator<AddMovieRequest>
             .GreaterThan(0).WithMessage("El precio debe ser mayor que cero.");
         RuleFor(x => x.Genres)
             .NotEmpty().WithMessage("Debe seleccionar al menos un género.");
+
+        RuleFor(x => x.Casters)
+            .NotEmpty().WithMessage("El elenco no puede estar vacío.")
+            .Must(NoRepeatedPersons).WithMessage("El elenco no puede repetir la misma persona.");
+        // Valida cada elemento de la colección: PersonId y rol obligatorios.
+        RuleForEach(x => x.Casters)
+            .ChildRules(participant => ParticipantRules(participant, "el elenco"));
+
+        RuleFor(x => x.Crewers)
+            .NotEmpty().WithMessage("El staff no puede estar vacío.")
+            .Must(NoRepeatedPersons).WithMessage("El staff no puede repetir la misma persona.");
+        RuleForEach(x => x.Crewers)
+            .ChildRules(participant => ParticipantRules(participant, "el staff"));
     }
+
+    /// <param name="participantKind">Nombre de la colección, para que el mensaje diga si falla el elenco o el staff.</param>
+    private static void ParticipantRules(InlineValidator<Participant> validator, string participantKind)
+    {
+        validator.RuleFor(p => p.PersonId)
+            .NotEmpty().WithMessage($"La persona en {participantKind} es obligatoria.");
+
+        validator.RuleFor(p => p.role)
+            .NotEmpty().WithMessage($"El rol en {participantKind} es obligatorio.");
+    }
+
+    // Cast y Crew usan (MovieId, PersonId) como clave primaria: una persona repetida
+    // dentro de la misma colección rompería al guardar.
+    private static bool NoRepeatedPersons(IEnumerable<Participant> participants)
+        => participants is null || participants.DistinctBy(p => p.PersonId).Count() == participants.Count();
 }

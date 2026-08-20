@@ -5,13 +5,13 @@ namespace CP.Portal.Movies.Module.Domain;
 
 internal class Crew
 {
-    public Guid Id { get; private set; } = Guid.CreateVersion7();
-    public Guid MovieId { get; private set; }
-    public Guid PersonId { get; private set; }
-    public string Role { get; private set; } = null!;
+    public Guid Id { get; set; } = Guid.CreateVersion7();
+    public Guid MovieId { get; set; }
+    public Guid PersonId { get; set; }
+    public string Role { get; set; } = null!;
 
-    public Movie Movie { get; private set; } = null!;
-    public Person Person { get; private set; } = null!;
+    public Movie Movie { get; set; } = null!;
+    public Person Person { get; set; } = null!;
 }
 
 internal class CrewConf : IEntityTypeConfiguration<Crew>

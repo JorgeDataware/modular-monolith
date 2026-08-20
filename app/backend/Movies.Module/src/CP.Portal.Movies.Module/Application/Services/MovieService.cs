@@ -19,11 +19,37 @@ internal class MovieService(IMovieRepository movieRepository, IValidator<AddMovi
 
     public async Task<Result<string>> CreateMovieAsync(AddMovieRequest request, CancellationToken ct)
     {
-        var val = await _validator.ValidateAsync(request);
+        var val = await _validator.ValidateAsync(request, ct);
         if (!val.IsValid)
             return val.ToFailure<string>();
 
-        var movie = _mapper.Map<Movie>(request);
+        var movie = new Movie
+        {
+            Title = request.Title,
+            Description = request.Description,
+            ReleaseYear = request.ReleaseYear,
+            DurationMinutes = request.DurationMinutes,
+            Language = request.Language,
+            RentalPrice = request.RentalPrice
+        };
+
+        var casters = request.Casters.Select(c => new Cast
+        {
+            MovieId = movie.Id,
+            PersonId = c.PersonId,
+            Character = c.role
+        }).ToList();
+
+        var crewers = request.Crewers.Select(c => new Crew
+        {
+            MovieId = movie.Id,
+            PersonId = c.PersonId,
+            Role = c.role
+        }).ToList();
+
+        movie.Casts = casters;
+        movie.Crewers = crewers;
+
         await _movieRepository.AddAsync(movie, ct);
         await _movieRepository.SaveChangesAsync(ct);
 
