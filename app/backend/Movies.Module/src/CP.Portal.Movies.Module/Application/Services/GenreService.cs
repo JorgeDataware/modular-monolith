@@ -37,8 +37,12 @@ internal class GenreService(IGenreRepository genreRepository, IValidator<AddGenr
     public async Task<Result<IEnumerable<GenreDto>>> ListGenresAsync(CancellationToken ct)
     {
         var genres = await _genreRepository.GetAllAsync(ct);
-        
-        var genreDtos = _mapper.Map<IEnumerable<GenreDto>>(genres);
+
+        var genreDtos = genres.Select(g => new GenreDto
+        {
+            Id = g.Id,
+            Name = g.Name
+        });
 
         return Result<IEnumerable<GenreDto>>.Success(genreDtos);
     }
