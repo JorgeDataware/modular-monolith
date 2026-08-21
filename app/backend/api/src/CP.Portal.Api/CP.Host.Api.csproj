@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Movies.Module\src\CP.Portal.Movies.Module\CP.Portal.Movies.Module.csproj" />
+	  <ProjectReference Include="..\..\..\Users.Module\src\Users.Module\Users.Module.csproj" />
   </ItemGroup>
 
 </Project>

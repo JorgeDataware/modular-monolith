@@ -2,11 +2,13 @@ using CP.Portal.Api.OpenApi;
 using CP.Portal.Movies.Module;
 using FastEndpoints;
 using Scalar.AspNetCore;
+using Users.Module;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Inyectar movie service
 builder.Services.MovieService(builder.Configuration);
+builder.Services.UsersModuleServices(builder.Configuration);
 
 // Inyectar FastEndpoints
 builder.Services.AddFastEndpoints();
@@ -21,6 +23,7 @@ builder.Services.AddOpenApi(options =>
 var app = builder.Build();
 
 app.UseMoviesModuleMigrations();
+app.UseUsersModuleMigrations();
 
 //app.UseHttpsRedirection();
 
