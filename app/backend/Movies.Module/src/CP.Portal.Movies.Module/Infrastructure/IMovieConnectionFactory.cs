@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using System.Data;
 
-namespace CP.Portal.Movies.Module.Utilities.Abstractions;
+namespace CP.Portal.Movies.Module.Infrastructure;
 
 internal interface IMovieConnectionFactory
 {

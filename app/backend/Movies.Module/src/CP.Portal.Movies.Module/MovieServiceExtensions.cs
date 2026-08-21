@@ -4,7 +4,6 @@ using CP.Portal.Movies.Module.Domain.Repositories.GenreRepository;
 using CP.Portal.Movies.Module.Domain.Repositories.MovieRepository;
 using CP.Portal.Movies.Module.Domain.Repositories.PersonRepository;
 using CP.Portal.Movies.Module.Infrastructure;
-using CP.Portal.Movies.Module.Utilities.Abstractions;
 using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;

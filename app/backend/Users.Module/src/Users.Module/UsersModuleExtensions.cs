@@ -25,6 +25,9 @@ public static class UsersModuleExtensions
         // REGISTRO DE AUTOMAPPER
         services.AddAutoMapper(cfg => { cfg.AddMaps(Assembly.GetExecutingAssembly()); });
 
+        // Fábrica de conexiones para Dapper
+        services.AddScoped<IUsersConnectionFactory, UsersConnectionFactory>();
+
         return services;
     }
 

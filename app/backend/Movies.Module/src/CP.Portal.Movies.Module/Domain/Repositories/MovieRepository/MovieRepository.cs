@@ -1,6 +1,5 @@
 ﻿using CP.Portal.Movies.Module.Application.Endpoints.MovieEndpoints.GetMovieByIdAsync;
 using CP.Portal.Movies.Module.Infrastructure;
-using CP.Portal.Movies.Module.Utilities.Abstractions;
 using Dapper;
 using Microsoft.EntityFrameworkCore;
 
