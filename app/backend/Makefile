@@ -1,9 +1,9 @@
-.PHONY: movie-migration-add
+.PHONY: movie-migration-add users-migration-add
 
 MIGRATION ?= no
 
 movie-migration-add:
-	dotnet ef migrations add $(MIGRATION) -c MovieDbContext -p "Movies.Module\src\CP.Portal.Movies.Module" -s "Api\src\CP.Portal.Api" --output-dir "Domain\Migrations"
+	dotnet ef migrations add $(MIGRATION) -c MovieDbContext -p "Movies.Module/src/CP.Portal.Movies.Module" -s "api/src/CP.Portal.Api" --output-dir "Domain/Migrations"
 
 users-migration-add:
-	dotnet ef migrations add $(MIGRATION) -c UsersDbContext -p "Users.Module\src\Users.Module" -s "Api\src\CP.Portal.Api" --output-dir "Domain\Migrations"
+	dotnet ef migrations add $(MIGRATION) -c UsersDbContext -p "Users.Module/src/Users.Module" -s "api/src/CP.Portal.Api" --output-dir "Domain/Migrations"
