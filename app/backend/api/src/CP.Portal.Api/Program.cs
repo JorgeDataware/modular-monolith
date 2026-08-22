@@ -24,6 +24,7 @@ var app = builder.Build();
 
 app.UseMoviesModuleMigrations();
 app.UseUsersModuleMigrations();
+await app.UseUsersModuleSeedAsync();
 
 //app.UseHttpsRedirection();
 
