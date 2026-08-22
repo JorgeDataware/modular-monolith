@@ -1,4 +1,4 @@
-﻿using CP.Portal.Movies.Module.Utilities.Abstractions;
+﻿using Core.Contracts.Abstractions;
 
 namespace CP.Portal.Movies.Module.Utilities.Errors;
 

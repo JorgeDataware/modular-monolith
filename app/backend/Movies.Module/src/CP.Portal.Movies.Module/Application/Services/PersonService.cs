@@ -6,9 +6,9 @@ using CP.Portal.Movies.Module.Application.Endpoints.PersonEndpoints.UpdatePerson
 using CP.Portal.Movies.Module.Application.Services.IServices;
 using CP.Portal.Movies.Module.Domain;
 using CP.Portal.Movies.Module.Domain.Repositories.PersonRepository;
-using CP.Portal.Movies.Module.Utilities.Abstractions;
+using Core.Contracts.Abstractions;
 using CP.Portal.Movies.Module.Utilities.Errors;
-using CP.Portal.Movies.Module.Utilities.Extensions;
+using Core.Contracts.Extensions;
 using FluentValidation;
 
 namespace CP.Portal.Movies.Module.Application.Services;

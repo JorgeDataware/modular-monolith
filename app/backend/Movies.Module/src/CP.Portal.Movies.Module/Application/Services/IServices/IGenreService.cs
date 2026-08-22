@@ -1,6 +1,6 @@
 ﻿using CP.Portal.Movies.Module.Application.Endpoints.GenreEndpoints.CreateGenre;
 using CP.Portal.Movies.Module.Application.Endpoints.GenreEndpoints.GetListGenresAsync;
-using CP.Portal.Movies.Module.Utilities.Abstractions;
+using Core.Contracts.Abstractions;
 
 namespace CP.Portal.Movies.Module.Application.Services.IServices;
 

@@ -23,4 +23,8 @@
 	  <Folder Include="Application\Endpoints\PersonEndpoints\UpdatePerson\" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\..\..\CP.Contracts\src\Core.Contracts\Core.Contracts.csproj" />
+	</ItemGroup>
+
 </Project>

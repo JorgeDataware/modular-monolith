@@ -1,9 +1,9 @@
-﻿using CP.Portal.Movies.Module.Utilities.Abstractions;
+using Core.Contracts.Abstractions;
 using FluentValidation.Results;
 
-namespace CP.Portal.Movies.Module.Utilities.Extensions;
+namespace Core.Contracts.Extensions;
 
-internal static class ValidationResultExtension
+public static class ValidationResultExtension
 {
     public static Result<T> ToFailure<T>(this ValidationResult validation)
     {

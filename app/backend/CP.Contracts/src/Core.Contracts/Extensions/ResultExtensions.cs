@@ -1,9 +1,9 @@
-using CP.Portal.Movies.Module.Utilities.Abstractions;
+using Core.Contracts.Abstractions;
 using FastEndpoints;
 
-namespace CP.Portal.Movies.Module.Utilities.Extensions;
+namespace Core.Contracts.Extensions;
 
-internal static class ResultExtensions
+public static class ResultExtensions
 {
     /// <summary>
     /// Mapea un Result&lt;T&gt; del service/repository al envelope de respuesta HTTP.

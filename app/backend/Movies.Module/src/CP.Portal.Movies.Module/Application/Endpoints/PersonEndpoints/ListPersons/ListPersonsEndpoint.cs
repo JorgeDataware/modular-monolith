@@ -1,5 +1,5 @@
 ﻿using CP.Portal.Movies.Module.Application.Services.IServices;
-using CP.Portal.Movies.Module.Utilities.Extensions;
+using Core.Contracts.Extensions;
 using FastEndpoints;
 
 namespace CP.Portal.Movies.Module.Application.Endpoints.PersonEndpoints.ListPersons;

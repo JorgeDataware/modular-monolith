@@ -2,7 +2,7 @@
 using CP.Portal.Movies.Module.Application.Endpoints.PersonEndpoints.GetPersonById;
 using CP.Portal.Movies.Module.Application.Endpoints.PersonEndpoints.ListPersons;
 using CP.Portal.Movies.Module.Application.Endpoints.PersonEndpoints.UpdatePerson;
-using CP.Portal.Movies.Module.Utilities.Abstractions;
+using Core.Contracts.Abstractions;
 
 namespace CP.Portal.Movies.Module.Application.Services.IServices;
 

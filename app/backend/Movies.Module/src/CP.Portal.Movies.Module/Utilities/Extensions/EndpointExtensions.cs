@@ -1,4 +1,5 @@
 using CP.Portal.Movies.Module.Utilities.Abstractions;
+using Core.Contracts.Abstractions;
 using FastEndpoints;
 
 namespace CP.Portal.Movies.Module.Utilities.Extensions;

@@ -1,7 +1,7 @@
 ﻿using CP.Portal.Movies.Module.Application.Endpoints.Movie.CreateMovie;
 using CP.Portal.Movies.Module.Application.Endpoints.Movie.GetListMoviesAsync;
 using CP.Portal.Movies.Module.Application.Endpoints.MovieEndpoints.GetMovieByIdAsync;
-using CP.Portal.Movies.Module.Utilities.Abstractions;
+using Core.Contracts.Abstractions;
 
 namespace CP.Portal.Movies.Module.Application.Services.IServices;
 

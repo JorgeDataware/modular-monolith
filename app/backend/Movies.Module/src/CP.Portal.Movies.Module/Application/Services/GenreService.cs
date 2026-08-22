@@ -4,8 +4,8 @@ using CP.Portal.Movies.Module.Application.Endpoints.GenreEndpoints.GetListGenres
 using CP.Portal.Movies.Module.Application.Services.IServices;
 using CP.Portal.Movies.Module.Domain;
 using CP.Portal.Movies.Module.Domain.Repositories.GenreRepository;
-using CP.Portal.Movies.Module.Utilities.Abstractions;
-using CP.Portal.Movies.Module.Utilities.Extensions;
+using Core.Contracts.Abstractions;
+using Core.Contracts.Extensions;
 using FluentValidation;
 
 namespace CP.Portal.Movies.Module.Application.Services;

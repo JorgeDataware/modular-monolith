@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\CP.Contracts\src\Core.Contracts\Core.Contracts.csproj" />
+    <Folder Include="Domain\Repositories\UserRepository\" />
   </ItemGroup>
 
 </Project>

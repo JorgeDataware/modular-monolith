@@ -1,4 +1,4 @@
-﻿namespace CP.Portal.Movies.Module.Utilities.Abstractions;
+namespace Core.Contracts.Abstractions;
 
 public class Result<T>
 {
