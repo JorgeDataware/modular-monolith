@@ -11,7 +11,7 @@ internal class CartMovieRepository(UsersDbContext usersContext, IUsersConnection
     public async Task AddCartMovieAsync(CartMovie cartMovie, CancellationToken ct)
         => await _usersContext.CartMovie.AddAsync(cartMovie, ct);
 
-    public async Task DeleteCartMovieAsync(Guid movieId, string userId, CancellationToken ct)
+    public async Task<int> DeleteCartMovieAsync(Guid movieId, string userId, CancellationToken ct)
         => await _usersContext.CartMovie.Where(cm => cm.MovieId == movieId && cm.UserId == userId).ExecuteDeleteAsync(ct);
 
     public async Task<IEnumerable<Guid>> GetMoviesIds(string userId)

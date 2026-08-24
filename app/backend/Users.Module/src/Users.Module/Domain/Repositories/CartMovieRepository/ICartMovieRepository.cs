@@ -3,6 +3,6 @@
 internal interface ICartMovieRepository
 {
     Task AddCartMovieAsync(CartMovie cartMovie, CancellationToken ct);
-    Task DeleteCartMovieAsync(Guid movieId, string userId, CancellationToken ct);
+    Task<int> DeleteCartMovieAsync(Guid movieId, string userId, CancellationToken ct);
     Task<IEnumerable<Guid>> GetMoviesIds(string userId);
 }

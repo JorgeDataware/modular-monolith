@@ -13,6 +13,12 @@ internal class CartMovie
 
     // Movie
     public Guid MovieId { get; set; }
+
+    internal CartMovie(string UserId, Guid MovieId)
+    {
+        this.UserId = UserId;
+        this.MovieId = MovieId;
+    }
 }
 
 internal class CartConf : IEntityTypeConfiguration<CartMovie>
