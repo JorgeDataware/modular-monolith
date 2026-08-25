@@ -6,10 +6,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Reflection;
+using Users.Module.Application.Services.Auth;
 using Users.Module.Application.Services.CartMovieService;
 using Users.Module.Domain;
 using Users.Module.Domain.Repositories.CartMovieRepository;
 using Users.Module.Infrastructure;
+using Users.Module.Utilities.Configuration;
 
 namespace Users.Module;
 
@@ -19,6 +21,7 @@ public static class UsersModuleExtensions
     {
         // Registro DI de servicios
         services.AddScoped<ICartMovieService, CartMovieService>();
+        services.AddScoped<IAuthService, AuthService>();
 
         // Registro DI de repositories
         services.AddScoped<ICartMovieRepository, CartMovieRepository>();
@@ -29,6 +32,12 @@ public static class UsersModuleExtensions
         {
             opt.UseSqlServer(connectionString);
         });
+
+        services.AddOptions<JWTConfigs>()
+            .Bind(config.GetSection(JWTConfigs.SectionName))
+            .Validate(c => !string.IsNullOrWhiteSpace(c.Secret), "Jwt:Secret no está configurado.")
+            .Validate(c => c.ExpirationMinutes > 0, "Jwt:ExpirationMinutes debe ser mayor a 0.")
+            .ValidateOnStart();
 
         // Identity: registra UserManager<User> sobre UsersDbContext.
         // AddIdentityCore (y no AddIdentity) porque el módulo no usa cookies de login.

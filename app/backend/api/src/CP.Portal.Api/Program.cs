@@ -1,7 +1,10 @@
 using CP.Portal.Api.OpenApi;
 using CP.Portal.Movies.Module;
 using FastEndpoints;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
+using System.Text;
 using Users.Module;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,8 +23,31 @@ builder.Services.AddOpenApi(options =>
     options.AddOperationTransformer<RouteParamOperationTransformer>();
 });
 
+var jwtSecrets = builder.Configuration["Jwt:Secret"]!;
+var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecrets));
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.RequireHttpsMetadata = false;
+        options.SaveToken = true;
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = key,
+            ClockSkew = TimeSpan.Zero
+        };
+    });
+
+builder.Services.AddAuthorization();
+
 var app = builder.Build();
 
+app.UseAuthentication();
+app.UseAuthorization();
 app.UseMoviesModuleMigrations();
 app.UseUsersModuleMigrations();
 await app.UseUsersModuleSeedAsync();
