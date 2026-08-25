@@ -10,11 +10,12 @@ internal class DeleteCartMovieEndpoint(ICartMovieService cartService) : Endpoint
 
     public override void Configure()
     {
-        base.Configure();
+        Delete("api/CartMovie/{MovieId}");
+        AllowAnonymous();
     }
 
     public override async Task HandleAsync(CancellationToken ct)
     {
-        var movieId = Route<Guid>("movieId");
+        var movieId = Route<Guid>("MovieId");
     }
 }

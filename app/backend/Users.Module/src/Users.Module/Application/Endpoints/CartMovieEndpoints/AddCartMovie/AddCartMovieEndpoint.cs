@@ -10,11 +10,12 @@ internal class AddCartMovieEndpoint(ICartMovieService cartService) : EndpointWit
 
     public override void Configure()
     {
-        base.Configure();
+        Post("api/CartMovie/{MovieId}");
+        AllowAnonymous();
     }
 
     public override async Task HandleAsync(CancellationToken ct)
     {
-        var movieId = Route<Guid?>("movieId");
+        var movieId = Route<Guid?>("MovieId");
     }
 }
