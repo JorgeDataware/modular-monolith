@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using System.Reflection;
 using Users.Module.Application.Services.Auth;
 using Users.Module.Application.Services.CartMovieService;
+using Users.Module.Application.Services.UserService;
 using Users.Module.Domain;
 using Users.Module.Domain.Repositories.CartMovieRepository;
 using Users.Module.Infrastructure;
@@ -22,6 +23,7 @@ public static class UsersModuleExtensions
         // Registro DI de servicios
         services.AddScoped<ICartMovieService, CartMovieService>();
         services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<IUserService, UserService>();
 
         // Registro DI de repositories
         services.AddScoped<ICartMovieRepository, CartMovieRepository>();

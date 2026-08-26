@@ -31,8 +31,8 @@ internal class AuthService(UserManager<User> userManager, IOptions<JWTConfigs> j
             option.SigningKey = secret;
             option.ExpireAt = DateTime.UtcNow.AddHours(500);
             option.User["sub"] = user.Id;
-            option.User["email"] = user.Email;
-            option.User["name"] = user.FullName;
+            option.User["email"] = user.Email!;
+            option.User["name"] = user.FullName!;
         });
 
         return Result<string>.Success(token);
