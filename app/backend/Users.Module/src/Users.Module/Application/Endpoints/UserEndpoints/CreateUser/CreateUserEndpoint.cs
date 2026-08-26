@@ -1,4 +1,5 @@
 ﻿using Core.Contracts.Abstractions;
+using Core.Contracts.Extensions;
 using FastEndpoints;
 using Users.Module.Application.Services.UserService;
 
@@ -16,6 +17,8 @@ internal class CreateUserEndpoint(IUserService userService) : Endpoint<CreateUse
 
     public override async Task HandleAsync(CreateUserRequest request, CancellationToken ct)
     {
+        var result = await _userService.CreateUserAsync(request, ct);
 
+        await this.SendApiResponseAsync(result, "Usuario creado correctamente", ct: ct);
     }
 }
