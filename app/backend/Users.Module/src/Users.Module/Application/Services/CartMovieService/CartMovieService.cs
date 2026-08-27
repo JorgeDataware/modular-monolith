@@ -1,21 +1,33 @@
 ﻿using Core.Contracts.Abstractions;
-using Users.Module.Application.Endpoints.CartMovieEndpoints.AddCartMovie;
+using MediatR;
+using Movies.Module.Contracts.Queries;
 using Users.Module.Domain;
 using Users.Module.Domain.Repositories.CartMovieRepository;
 using Users.Module.Utilities.Errors;
 
 namespace Users.Module.Application.Services.CartMovieService;
 
-internal class CartMovieService(ICartMovieRepository repo) : ICartMovieService
+internal class CartMovieService(ICartMovieRepository repo, ISender sender) : ICartMovieService
 {
     private readonly ICartMovieRepository _repo = repo;
+
+    // ISender es la mitad de IMediator que envía requests y espera respuesta.
+    // Esta clase no conoce IMovieService ni el ensamblado de películas: solo el mensaje.
+    private readonly ISender _sender = sender;
 
     public async Task<Result<Guid>> AddCartMovieAsync(Guid movieId, string userId, CancellationToken ct)
     {
         if (movieId == Guid.Empty)
             return Result<Guid>.Failure(CartMovieErrors.MovieIdEmpy);
 
-        var cartMovie = new CartMovie(userId, movieId);
+        // Comunicación entre módulos: se le pregunta a Movies si la película existe.
+        // Antes de esto el carrito aceptaba cualquier Guid y guardaba basura.
+        var movie = await _sender.Send(new GetMovieSummaryQuery(movieId), ct);
+
+        if (!movie.IsSuccess)
+            return Result<Guid>.Failure(movie.Error);
+
+        var cartMovie = new CartMovie(userId, movie.Value.Id);
 
         await _repo.AddCartMovieAsync(cartMovie, ct);
 

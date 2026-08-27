@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>Movies.Module.Contracts</RootNamespace>
+  </PropertyGroup>
+
+  <!--
+    Este ensamblado es la API pública del módulo de películas.
+    Regla: SOLO mensajes, DTOs y errores. Cero lógica, cero EF Core, cero servicios.
+    Por eso la única dependencia es MediatR.Contracts (las interfaces de mensaje,
+    sin el motor del mediador) más el shared kernel para reutilizar Result/Error.
+  -->
+  <ItemGroup>
+    <PackageReference Include="MediatR.Contracts" Version="2.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\CP.Contracts\src\Core.Contracts\Core.Contracts.csproj" />
+  </ItemGroup>
+
+</Project>

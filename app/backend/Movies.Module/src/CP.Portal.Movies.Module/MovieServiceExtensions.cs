@@ -4,6 +4,7 @@ using CP.Portal.Movies.Module.Domain.Repositories.GenreRepository;
 using CP.Portal.Movies.Module.Domain.Repositories.MovieRepository;
 using CP.Portal.Movies.Module.Domain.Repositories.PersonRepository;
 using CP.Portal.Movies.Module.Infrastructure;
+using Core.Contracts.Messaging;
 using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -33,6 +34,10 @@ public static class MovieServiceExtensions
         {
             opt.UseSqlServer(connectionString);
         });
+
+        // MediatR: descubre los handlers de ESTE ensamblado (Application/Integrations)
+        // y engancha los behaviors compartidos. El host no interviene.
+        services.AddModuleMediator(config, Assembly.GetExecutingAssembly());
 
         // Inyección de FluentValidation
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly(), includeInternalTypes: true);

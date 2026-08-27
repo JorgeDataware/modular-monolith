@@ -8,8 +8,14 @@ internal class CartMovieRepository(UsersDbContext usersContext, IUsersConnection
     private readonly UsersDbContext _usersContext = usersContext;
     private readonly IUsersConnectionFactory _usersConnectionFactory = usersConnectionFactory;
 
+    // AddAsync solo marca la entidad en el ChangeTracker; sin SaveChangesAsync la fila
+    // nunca llegaba a la base. Se persiste aquí para quedar simétrico con
+    // DeleteCartMovieAsync, que con ExecuteDeleteAsync también escribe de inmediato.
     public async Task AddCartMovieAsync(CartMovie cartMovie, CancellationToken ct)
-        => await _usersContext.CartMovie.AddAsync(cartMovie, ct);
+    {
+        await _usersContext.CartMovie.AddAsync(cartMovie, ct);
+        await _usersContext.SaveChangesAsync(ct);
+    }
 
     public async Task<int> DeleteCartMovieAsync(Guid movieId, string userId, CancellationToken ct)
         => await _usersContext.CartMovie.Where(cm => cm.MovieId == movieId && cm.UserId == userId).ExecuteDeleteAsync(ct);

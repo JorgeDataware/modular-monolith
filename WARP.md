@@ -39,6 +39,7 @@ app/backend/
 3. **Schema Isolation**: Each module uses its own database schema (Movies module uses `"movies"` schema)
 4. **Extension Methods for Integration**: Modules expose public extension methods for DI registration and middleware configuration
 5. **FastEndpoints**: Uses FastEndpoints library instead of traditional ASP.NET Core controllers for endpoint definition
+6. **Cross-Module Communication via MediatR**: Modules never reference each other's implementation. They communicate through messages published in per-module contract assemblies (`<Module>.Contracts`), dispatched by MediatR. See [docs/comunicacion-entre-modulos-mediatr.md](docs/comunicacion-entre-modulos-mediatr.md) for the full walkthrough.
 
 ## Development Commands
 

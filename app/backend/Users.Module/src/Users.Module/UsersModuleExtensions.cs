@@ -1,3 +1,4 @@
+﻿using Core.Contracts.Messaging;
 using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
@@ -49,6 +50,10 @@ public static class UsersModuleExtensions
             opt.Password.RequiredLength = 8;
         })
         .AddEntityFrameworkStores<UsersDbContext>();
+
+        // MediatR: descubre los handlers de ESTE ensamblado (Application/Integrations)
+        // y engancha los behaviors compartidos. El host no interviene.
+        services.AddModuleMediator(config, Assembly.GetExecutingAssembly());
 
         // Inyección de FluentValidation
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly(), includeInternalTypes: true);

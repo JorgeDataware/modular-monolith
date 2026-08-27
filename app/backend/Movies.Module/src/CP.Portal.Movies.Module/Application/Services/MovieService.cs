@@ -9,14 +9,24 @@ using Core.Contracts.Abstractions;
 using CP.Portal.Movies.Module.Utilities.Errors;
 using Core.Contracts.Extensions;
 using FluentValidation;
+using MediatR;
+using Movies.Module.Contracts.Events;
 
 namespace CP.Portal.Movies.Module.Application.Services;
 
-internal class MovieService(IMovieRepository movieRepository, IValidator<AddMovieRequest> validator, IMapper mapper) : IMovieService
+internal class MovieService(
+    IMovieRepository movieRepository,
+    IValidator<AddMovieRequest> validator,
+    IMapper mapper,
+    IPublisher publisher) : IMovieService
 {
     private readonly IMovieRepository _movieRepository = movieRepository;
     private readonly IValidator<AddMovieRequest> _validator = validator;
     private readonly IMapper _mapper = mapper;
+
+    // IPublisher es la mitad de IMediator que solo publica notificaciones.
+    // Inyectar IPublisher/ISender en vez de IMediator deja explícito qué hace la clase.
+    private readonly IPublisher _publisher = publisher;
 
     public async Task<Result<string>> CreateMovieAsync(AddMovieRequest request, CancellationToken ct)
     {
@@ -110,8 +120,14 @@ internal class MovieService(IMovieRepository movieRepository, IValidator<AddMovi
         if (movie.RentalPrice == price)
             return Result<Guid>.Success(id);
 
+        var previousPrice = movie.RentalPrice;
+
         movie.RentalPrice = price;
         await _movieRepository.SaveChangesAsync(ct);
+
+        // Se anuncia el hecho DESPUÉS de persistirlo. Movies no sabe quién escucha:
+        // hoy es Users, mañana podrían ser notificaciones o auditoría, sin tocar este código.
+        await _publisher.Publish(new MoviePriceChangedNotification(movie.Id, previousPrice, price), ct);
 
         return Result<Guid>.Success(id);
     }
